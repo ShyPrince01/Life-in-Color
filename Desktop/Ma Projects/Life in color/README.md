@@ -1,6 +1,6 @@
 # Life in Color 🎨
 
-**Life in Color** is an interactive mood tracker that allows users to log their daily emotions, visualize their mood history over time, and gain insights into their emotional well-being. It transforms daily data into a colorful mosaic and statistical charts.
+**Life in Color** is an interactive mood tracker and Progressive Web App (PWA) that allows users to log their daily emotions, visualize their mood history over time, and gain insights into their emotional well-being. It transforms daily data into a colorful mosaic and statistical charts.
 
 ## ✨ Features
 
@@ -22,6 +22,7 @@
 - **Calendar View**: A full calendar integration (FullCalendar) to see moods mapped to specific dates.
 - **Social Sharing**: Export your entire mood dashboard (Grid, Chart, Stats) as an image to share with friends.
 - **Reminders**: Browser notifications to remind you to log your mood.
+- **Installable App**: Built as a PWA, you can install this directly to your desktop or mobile device for a native app-like experience.
 
 ## 🚀 How to Run
 
@@ -30,7 +31,7 @@ Since this is a static web application, you can run it by simply opening the `in
 1. Clone or download the repository.
 2. Open `index.html`.
 3. Grant permissions for Camera and Notifications when prompted to use those specific features.
-4. **Important**: Add an MP3 file named `bg-music.mp3` to the project root folder for the background music to work.
+4. **Important**: Add an MP3 file named `Life in Color.mp3` to the project root folder for the background music to work.
 
 ## 📂 Code Structure
 
@@ -63,6 +64,7 @@ The core logic of the application. It handles:
     - **Camera**: Uses `navigator.mediaDevices.getUserMedia` to access the webcam for the "Predict Mood" feature.
     - **Music**: Handles background audio looping and the mute toggle UI.
     - **Sharing**: Uses `html2canvas` to capture the `.container` element and download it as a PNG.
+    - **PWA Support**: Handles the `beforeinstallprompt` event to enable in-browser installation.
 
 ## 🛠 Dependencies
 

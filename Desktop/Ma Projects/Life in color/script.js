@@ -93,7 +93,7 @@ function getColor(mood) {
 }
 
 // Set mood on cell click
-function setMood(index) {
+async function setMood(index) {
     if (selectedMood) {
         moods[index] = selectedMood;
         localStorage.setItem('moods', JSON.stringify(moods));
@@ -104,6 +104,28 @@ function setMood(index) {
         const cell = grid.children[index];
         cell.classList.add('pop');
         playSound(selectedMood);
+
+        // The Custom LogSnag API Call
+        try {
+            await fetch('https://api.logsnag.com/v1/log', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer d8a6f9c2c8c83c484b5f66894fd45c15'
+                },
+                body: JSON.stringify({
+                    project: "life-in-color",
+                    channel: "usage",
+                    event: "Mood Logged",
+                    description: `A user logged a ${selectedMood} mood.`,
+                    icon: "🎨",
+                    notify: true 
+                })
+            });
+            console.log("Stats sent to LogSnag!");
+        } catch (error) {
+            console.error("LogSnag failed:", error);
+        }
     }
 }
 
@@ -168,6 +190,10 @@ button:hover, select:hover { transform: translateY(-2px); box-shadow: 0 4px 8px 
 #stats-container { margin: 20px auto; padding: 20px; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); max-width: 600px; }
 #stats-text { line-height: 1.6; }
 #insights-container { margin-top: 15px; font-style: italic; color: #555; }
+footer { margin-top: 40px; color: #777; }
+footer p { margin-bottom: 10px; }
+.social-icons a { color: #555; margin: 0 10px; text-decoration: none; font-size: 1.5rem; transition: color 0.2s; }
+.social-icons a:hover { color: #000; }
 `;
 document.head.appendChild(style);
 
@@ -512,6 +538,12 @@ window.addEventListener('appinstalled', () => {
     if (typeof toastr !== 'undefined') toastr.success('App installed successfully!');
 });
 
+// Register Service Worker
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js')
+        .then(() => console.log('Service Worker Registered'));
+}
+
 // --- New Features: Calendar & Insights ---
 
 // 8. AI Insights
@@ -724,7 +756,7 @@ const tryPlayMusic = () => {
 };
 
 // 1. Try immediately
-// tryPlayMusic();
+tryPlayMusic();
 
 // 2. Try on any document interaction (catch-all)
 ['click', 'mousemove', 'touchstart', 'keydown', 'scroll', 'focus'].forEach(e =>
@@ -790,12 +822,10 @@ const initialCells = document.querySelectorAll('.cell');
 initialCells.forEach(cell => cell.style.opacity = '0');
 
 window.addEventListener('load', () => {
+    tryPlayMusic();
     setTimeout(() => {
         splashScreen.style.opacity = '0';
         splashScreen.style.visibility = 'hidden';
-
-        // Start music with animation
-        tryPlayMusic();
 
         // Trigger Grid Animation
         initialCells.forEach((cell, index) => {
