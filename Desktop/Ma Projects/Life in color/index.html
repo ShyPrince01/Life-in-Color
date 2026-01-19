@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Life in Color || Faithful John</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Life in Color</h1>
+        <p>Click a cell to log your mood for today. Build your weekly mosaic!</p>
+        
+        <div class="mood-selector">
+            <button id="happy-btn" class="mood-btn happy">😊 Happy</button>
+            <button id="neutral-btn" class="mood-btn neutral">😐 Neutral</button>
+            <button id="sad-btn" class="mood-btn sad">😢 Sad</button>
+        </div>
+        
+        <div id="mood-grid" class="grid"></div>
+        
+        <div class="stats">
+            <h2>Weekly Stats</h2>
+            <p id="stats-text">No moods logged yet.</p>
+        </div>
+        
+        <button id="reset-btn" class="reset-btn">Reset Week</button>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
